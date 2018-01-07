@@ -7,8 +7,9 @@ class PostsNew extends Component {
     renderTextInput = (field) => {
         return(
             <div>
-                <h3>{ form.label }</h3>
+                <h3>{ field.label }</h3>
                 <input type ='text' { ...field.input } />
+                { field.meta.error }
             </div>
         )
     }
@@ -33,32 +34,32 @@ class PostsNew extends Component {
                         name =      'body' 
                         component = { this.renderTextInput } 
                     />
+                    <button type = 'submit' className = 'btn btn-primary' >Submit</button>
+                    <Link className = 'btn btn-primary' to = '/' >Cancel</Link>
                 </form>
-                <div className='text-xs-right'>
-                    <Link className = 'btn btn-primary' to = '/' >
-                        Cancel
-                    </Link>
-                </div>
             </div>
         )
     }
 }
 
 
+const validate = (values) => {
+    const error = {}
+    if( !values.title ) {
+        error.title = 'Please enter a title'
+    }
+    if( !values.tags ) {
+        error.tags = 'Please enter at least one tag'
+    }
+    if( !values.body ) {
+        error.body = 'Post contents cannot be empty'
+    }
+    console.log(error)
+    return error
+}
+
 const PostsNewContainer = reduxForm({
-    validate(values)    {
-        const errors = {}
-        if( !values.title ) {
-            errors.title = 'Please enter a title'
-        }
-        if( !values.tags ) {
-            errors.title = 'Please enter at least one tag'
-        }
-        if( !values.body ) {
-            errors.title = 'Post contents cannot be empty'
-        }
-        return errors
-    },
-    form:               'PostsNewForm'
+    validate,
+    form: 'PostsNewForm'
 })(PostsNew)
 export { PostsNewContainer }
