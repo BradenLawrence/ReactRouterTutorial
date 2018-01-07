@@ -9,10 +9,18 @@ class PostsIndex extends Component {
         this.props.FindAllPosts()
     }
     
-    renderPosts = () => {
+    showRouteLink(id) {
+        return `/posts/${ id }`
+    }
+
+    renderPosts() {
         return _.map(this.props.posts, post => {
-            console.log(post)
-            return( <li className='list-group-item' key={ post.id }>{ post.title }</li> )
+            return( 
+                <li className='list-group-item' key={ post.id }>
+                    <Link to={ this.showRouteLink(post.id) }>
+                        { post.title }
+                    </Link>
+                </li> )
         })
     }
 
