@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link }             from 'react-router-dom'  
 import { connect }          from 'react-redux';
 import { Field, reduxForm } from 'redux-form'
+import { CreatePost }       from '../actions/index';
 
 class PostsNew extends Component {
     
@@ -19,7 +20,9 @@ class PostsNew extends Component {
     }
     
     onSubmit(values) {
-        console.log(values)
+        this.props.CreatePost(values, () => {
+            this.props.history.push('/')
+        })
     }
 
     render() {
@@ -45,8 +48,8 @@ class PostsNew extends Component {
                         name =      'body' 
                         component = { this.renderTextInput } 
                     />
-                    <button type = 'submit' className = 'btn btn-primary' >Submit</button>
-                    <Link className = 'btn btn-primary' to = '/' >Cancel</Link>
+                    <button type ='submit' className ='btn btn-primary' >Submit</button>
+                    <Link className ='btn btn-danger form-cancel' to = '/' >Cancel</Link>
                 </form>
             </div>
         )
@@ -68,5 +71,7 @@ const PostsNewContainer = reduxForm({
         return error
     },
     form: 'PostsNewForm'
-})(PostsNew)
+})(
+    connect(null, { CreatePost })(PostsNew)
+)
 export { PostsNewContainer }
