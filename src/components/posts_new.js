@@ -4,21 +4,32 @@ import { connect }          from 'react-redux';
 import { Field, reduxForm } from 'redux-form'
 
 class PostsNew extends Component {
+    
     renderTextInput = (field) => {
+        const formClassNames = 'form-group ' + (field.meta.touched && field.meta.error ? 'has-danger' : '')
         return(
-            <div>
+            <div className={ formClassNames }>
                 <h3>{ field.label }</h3>
-                <input type ='text' { ...field.input } />
-                { field.meta.error }
+                <input className = 'form-control' type ='text' { ...field.input } />
+                <div className = 'text-help'>
+                    { field.meta.touched ? field.meta.error : '' }
+                </div>
             </div>
         )
     }
     
+    onSubmit(values) {
+        console.log(values)
+    }
+
     render() {
+        const { handleSubmit } = this.props
         return(
             <div>
                 <div>You found the new post route!</div>
-                <form>
+                {/* Here is a good example of how to write a function the normal way as well as with arrow functions  */}
+                {/* <form onSubmit = { handleSubmit(this.onSubmit.bind(this)) } >  */}
+                <form onSubmit = { handleSubmit((values) => this.onSubmit(values)) } >
                     <Field 
                         label =     'Title'
                         name =      'title' 
@@ -42,24 +53,20 @@ class PostsNew extends Component {
     }
 }
 
-
-const validate = (values) => {
-    const error = {}
-    if( !values.title ) {
-        error.title = 'Please enter a title'
-    }
-    if( !values.tags ) {
-        error.tags = 'Please enter at least one tag'
-    }
-    if( !values.body ) {
-        error.body = 'Post contents cannot be empty'
-    }
-    console.log(error)
-    return error
-}
-
 const PostsNewContainer = reduxForm({
-    validate,
+    validate(values) {
+        const error = {}
+        if( !values.title ) {
+            error.title = 'Please enter a title'
+        }
+        if( !values.tags ) {
+            error.tags = 'Please enter at least one tag'
+        }
+        if( !values.body ) {
+            error.body = 'Post contents cannot be empty'
+        }
+        return error
+    },
     form: 'PostsNewForm'
 })(PostsNew)
 export { PostsNewContainer }
