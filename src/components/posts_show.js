@@ -1,5 +1,6 @@
-import React, { Component }    from 'react'
-
+import React, { Component } from 'react'
+import { connect }          from 'react-redux'  
+import { FindOnePost }      from '../actions/index';
 
 class PostsShow extends Component {
     componentDidMount() {
@@ -9,16 +10,21 @@ class PostsShow extends Component {
 
 
     render() {
-        const { match } = this.props
-        return ( 
-            <div>
-                You found the show route!
-            </div>
-        )
+        const { post } = this.props
+        if (post) {
+            return ( 
+                <div>
+                    { post.title }
+                </div>
+            )   
+        } else {
+            return <div>Loading...</div>
+        }
     }
 }
 
-const mapStateToProps = (state) => { return { post: state.post }  }
-console.log(mapStateToProps)
-const PostsShowContainer = PostsShow
+const mapStateToProps = (state, ownProps) => {
+    return { post: state.posts[ownProps.match.params.id] }  
+}
+const PostsShowContainer = connect(mapStateToProps, { FindOnePost })(PostsShow)
 export { PostsShowContainer }

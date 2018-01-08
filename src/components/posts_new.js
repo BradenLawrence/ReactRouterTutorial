@@ -40,12 +40,12 @@ class PostsNew extends Component {
                     />
                     <Field 
                         label =     'Tags'
-                        name =      'tags' 
+                        name =      'categories' 
                         component = { this.renderTextInput } 
                     />
                     <Field 
                         label =     'Post contents'
-                        name =      'body' 
+                        name =      'content' 
                         component = { this.renderTextInput } 
                     />
                     <button type ='submit' className ='btn btn-primary' >Submit</button>
