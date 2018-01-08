@@ -62,11 +62,11 @@ const PostsNewContainer = reduxForm({
         if( !values.title ) {
             error.title = 'Please enter a title'
         }
-        if( !values.tags ) {
-            error.tags = 'Please enter at least one tag'
+        if( !values.categories ) {
+            error.categories = 'Please enter at least one tag'
         }
-        if( !values.body ) {
-            error.body = 'Post contents cannot be empty'
+        if( !values.content ) {
+            error.content = 'Post contents cannot be empty'
         }
         return error
     },
