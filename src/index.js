@@ -24,4 +24,3 @@ ReactDOM.render(
     </BrowserRouter>
   </Provider>
   , document.querySelector('.container'));
-  {/* <Route path="/posts/:id/delete" component={ PostsDelete }/> */}

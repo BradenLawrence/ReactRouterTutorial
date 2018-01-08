@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { connect }          from 'react-redux'  
-import { FindOnePost }      from '../actions/index';
-import { Link }             from 'react-router-dom';
+import React, { Component }         from 'react'
+import { connect }                  from 'react-redux'  
+import { Link }                     from 'react-router-dom';
+import { FindOnePost, DeletePost }  from '../actions/index';
 
 class PostsShow extends Component {
     componentDidMount() {
@@ -9,6 +9,10 @@ class PostsShow extends Component {
         this.props.FindOnePost(id)
     }
 
+    onDeleteClick() {
+        const { id } = this.props.match.params
+        this.props.DeletePost(id, () => { this.props.history.push('/') })
+    }
 
     render() {
         const { post } = this.props
@@ -37,5 +41,5 @@ class PostsShow extends Component {
 const mapStateToProps = (state, ownProps) => {
     return { post: state.posts[ownProps.match.params.id] }  
 }
-const PostsShowContainer = connect(mapStateToProps, { FindOnePost })(PostsShow)
+const PostsShowContainer = connect(mapStateToProps, { FindOnePost, DeletePost })(PostsShow)
 export { PostsShowContainer }
