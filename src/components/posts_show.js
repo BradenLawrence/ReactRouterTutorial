@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect }          from 'react-redux'  
 import { FindOnePost }      from '../actions/index';
+import { Link }             from 'react-router-dom';
 
 class PostsShow extends Component {
     componentDidMount() {
@@ -12,9 +13,19 @@ class PostsShow extends Component {
     render() {
         const { post } = this.props
         if (post) {
-            return ( 
+            return (
                 <div>
-                    { post.title }
+                    <div className='text-xs-right'>
+                        <Link to='/' className='btn btn-primary'>Back</Link>
+                    </div>
+                    <div>
+                        <h2>{ post.title }</h2>
+                        <h6>Tags: { post.categories }</h6>
+                        <p>{ post.content }</p>
+                        <button className='btn btn-danger' onClick= { (id) => this.onDeleteClick() }>
+                            Delete
+                        </button>
+                    </div>
                 </div>
             )   
         } else {
