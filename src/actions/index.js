@@ -38,7 +38,7 @@ const DeletePost = function(id, callback) {
         .then( () => callback() )
     return {
         type:       DELETE_POST,
-        payload:    request
+        payload:    id
     }
 }
 
